@@ -12,7 +12,7 @@ if(!state) {
 }
 const { pikminDatas,  getAllFirebasePikminData: _getAllFirebasePikminData } = state
 
-const oneData = ref([]);
+// const oneData = ref([]);
 //firebaseから全体データを引っ張ってきた時の長さを格納する。
 const dataLength = ref();
 
