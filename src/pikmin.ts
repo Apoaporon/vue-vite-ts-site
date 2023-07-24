@@ -1,0 +1,38 @@
+export const pikminData = [
+    {id:0,
+    name:"赤ピクミン",
+    imagePath:"../red.png"
+    },
+    {id:1,
+    name:"青ピクミン",
+    imagePath:"../blue.png"
+    },
+    {id:2,
+    name:"黄ピクミン",
+    imagePath:"../yellow.png"
+    },
+    {id:3,
+    name:"岩ピクミン",
+    imagePath:"../block.png"
+    },
+    {id:4,
+    name:"羽ピクミン",
+    imagePath:"../wing.png"
+    },
+    {
+        id:5,
+        name:"紫ピクミン",
+        imagePath:"../purple.png"
+    },
+    {
+        id:6,
+        name:"白ピクミン",
+        imagePath:"../white.png"
+    },
+    {
+        id:7,
+        name:"ぷおんピクミン",
+        imagePath:"../puon.png"
+    }
+
+]
