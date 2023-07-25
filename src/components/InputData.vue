@@ -31,6 +31,10 @@ const getAllFirebasePikminData = async () => {
 }
 getAllFirebasePikminData();
 
+//loadingを実装してみる
+const isLoading = ref(true);
+setTimeout(()=>isLoading.value = false, 3000)
+
 // const test2 = async (editNum: number) => {
 //     try {
 //         const response = await axios.get(`https://pikmin-2e508-default-rtdb.firebaseio.com/pikmin-data/${editNum}.json`);
@@ -79,21 +83,26 @@ const putFirebase = async () => {
 </script>
 
 <template>
-<div>
+    <vue-element-loading
+        :active="isLoading"
+        spinner="bar-fade-scale"
+        color="#FF6700"
+    />
     <div>
-        <h4>名前を入力</h4>
-        <input type="text" v-model="inputData.pikminName" />
-        <h4>和名を入力</h4>
-        <input type="text" v-model="inputData.jName">
-        <h4>英語名を入力</h4>
-        <input type="text" v-model="inputData.sName">
-        <h4>画像のpathを入力</h4>
-        <input type="text" v-model="inputData.imgPath">
-        <h4>詳細を入力</h4>
-        <textarea cols="30" rows="10" v-model="inputData.detail"></textarea>
+        <div>
+            <h4>名前を入力</h4>
+            <input type="text" v-model="inputData.pikminName" />
+            <h4>和名を入力</h4>
+            <input type="text" v-model="inputData.jName">
+            <h4>英語名を入力</h4>
+            <input type="text" v-model="inputData.sName">
+            <h4>画像のpathを入力</h4>
+            <input type="text" v-model="inputData.imgPath">
+            <h4>詳細を入力</h4>
+            <textarea cols="30" rows="10" v-model="inputData.detail"></textarea>
+        </div>
+        <button @click="putFirebase">Firebaseに送信</button>
     </div>
-    <button @click="putFirebase">Firebaseに送信</button>
-</div>
 
 
 <!-- <div>
