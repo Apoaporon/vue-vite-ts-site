@@ -17,6 +17,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "CardList",
         component: CardList
     },
+    {   //入力する
+        path: "/list/input",
+        name: "InputData",
+        component: InputData,
+    },
     {   //idをバインドしておく？
         path: "/list/:id",
         name: "PikminDetail",
