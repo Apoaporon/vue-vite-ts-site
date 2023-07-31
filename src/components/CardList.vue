@@ -51,5 +51,12 @@ getFirebaseData();
 .grid-tile {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  column-gap: 30px;
+  row-gap: 30px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px 0;
 }
+
 </style>
