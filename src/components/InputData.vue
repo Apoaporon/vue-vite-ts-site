@@ -32,19 +32,7 @@ const getAllFirebasePikminData = async () => {
 }
 getAllFirebasePikminData();
 
-// const test2 = async (editNum: number) => {
-//     try {
-//         const response = await axios.get(`https://pikmin-2e508-default-rtdb.firebaseio.com/pikmin-data/${editNum}.json`);
-//         if (response.status !== 200) {
-//             console.log('error番号は', response.status);
-//             throw new Error ('サーバー側で発生したエラーです');
-//         }
-//         oneData.value = response.data; //帰ってきたjsonデータを格納する
 
-//     } catch (e) {
-//         console.log('以下のエラーが発生しました', e);
-//     }
-// }
 
 // Firebaseにpostする関数
 const putFirebase = async () => {
