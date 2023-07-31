@@ -14,18 +14,6 @@ provide(pikminKey, pikimins)
     <PageHedder />
   </header>
   <RouterView />
-
-  <!-- 検索bar + header -->
-  
-  <!-- <div>
-    <div>
-      <input v-model="textarea" type="text">
-    </div>
-    <button @click="clickButton">こんにちは</button>
-  </div>
-  <div v-for="hoge in items" :key="hoge.id">
-      {{ hoge }}
-  </div> -->
 </template>
 <style scoped>
 

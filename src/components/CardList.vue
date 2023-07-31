@@ -9,6 +9,7 @@ import axios from 'axios';
 
 //FireBaseからデータを取得してみる
 const posts = ref<Pikmin[]>(); //firebaseから取得したデータを格納するやつ
+  const isLoading = ref(true); // ローディングの状態管理
 
 //firebaseにあるデータの全件検索
 const getFirebaseData = async () => {
@@ -21,6 +22,7 @@ const getFirebaseData = async () => {
     }
     posts.value = response.data;
     console.log(posts.value)
+    isLoading.value = false
   } catch (e) {
     console.log('以下のエラーが発生しました', e);
   }
@@ -29,10 +31,13 @@ const getFirebaseData = async () => {
 getFirebaseData();
 
 </script>
+
 <template>
-  <RouterLink :to="{ name: 'InputData'}">
-    test
-  </RouterLink>
+  <vue-element-loading
+        :active="isLoading"
+        spinner="bar-fade-scale"
+        color="#FF6700"
+  />
     <!-- Cardコンポーネントにデータを送っている -->
   <div class="grid-tile">
     <div class="card-container" v-for="data in posts" :key="data.id">

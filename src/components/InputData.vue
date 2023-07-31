@@ -4,6 +4,7 @@ import { ref, reactive, inject } from 'vue';
 import axios from 'axios';
 import { storage } from '../firebase';
 import { pikminKey } from '../store/usePikminData';
+import router from '../router/index';
 
 
 const state = inject(pikminKey)
@@ -30,10 +31,6 @@ const getAllFirebasePikminData = async () => {
     dataLength.value = Object.keys(pikminDatas.value).length //データサイズを入れる
 }
 getAllFirebasePikminData();
-
-//loadingを実装してみる
-const isLoading = ref(true);
-setTimeout(()=>isLoading.value = false, 3000)
 
 // const test2 = async (editNum: number) => {
 //     try {
@@ -63,6 +60,8 @@ const putFirebase = async () => {
         try {
             const response = await axios.put(`${storage.databaseURL}/pikmin-data/${dataLength.value}.json`, data)
             console.log(response.status)
+            // リダイレクト
+            router.push({ name: 'CardList'})
 
         } catch(e) {
             console.log(e)
@@ -83,11 +82,6 @@ const putFirebase = async () => {
 </script>
 
 <template>
-    <vue-element-loading
-        :active="isLoading"
-        spinner="bar-fade-scale"
-        color="#FF6700"
-    />
     <div>
         <div>
             <h4>名前を入力</h4>

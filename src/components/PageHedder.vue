@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const headerMenu = [{id:0, menu:"MENU1"}, {id:1, menu:"MENU2"}, {id:2, menu:"MENU3"}]
+
 </script>
 <template>
     <div class="wrapper-site-header">
@@ -8,8 +8,10 @@ const headerMenu = [{id:0, menu:"MENU1"}, {id:1, menu:"MENU2"}, {id:2, menu:"MEN
           <h2>ピクミンまとめ</h2>
         </RouterLink>
         <nav class="navbar">
-            <ul v-for="menu in headerMenu" :key="menu.id">
-                <li>{{ menu.menu }}</li>
+            <ul>
+                <RouterLink :to="{ name : 'InputData'}" >
+                  <li>情報提供</li>
+                </RouterLink>
             </ul>
         </nav>
     </div>
