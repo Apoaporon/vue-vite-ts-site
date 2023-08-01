@@ -13,8 +13,14 @@ provide(pikminKey, pikimins)
   <header>
     <PageHedder />
   </header>
-  <RouterView />
+  <div class="app-content">
+    <RouterView />
+  </div>
+
 </template>
 <style scoped>
-
+.app-content {
+  background-color: #f2f3f6;
+  padding: 30px 0;
+}
 </style>
