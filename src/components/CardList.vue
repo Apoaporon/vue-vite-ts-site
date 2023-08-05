@@ -1,34 +1,26 @@
 <script setup lang="ts">
 
-import { ref } from 'vue';
-import { Pikmin } from '../types';
+import { ref, inject } from 'vue';
 import Card from './Card.vue';
-import axios from 'axios';
-
-// const posts = ref<Post[]>(pikminData); //pikminデータを格納するリスト
+import { pikminKey } from '../store/usePikminData';
 
 //FireBaseからデータを取得してみる
-const posts = ref<Pikmin[]>(); //firebaseから取得したデータを格納するやつ
-  const isLoading = ref(true); // ローディングの状態管理
+const isLoading = ref(true); // ローディングの状態管理
+//storeからインジェクトする
+const state = inject(pikminKey)
+//undifindチェックを行う
+if (!state) {
+  throw new Error("state is undifined")
+}
+const { pikminDatas, getAllFirebasePikminData: _getAllFirebasePikminData } = state
 
 //firebaseにあるデータの全件検索
-const getFirebaseData = async () => {
-  try {
-    const response = await axios.get('https://pikmin-2e508-default-rtdb.firebaseio.com/pikmin-data.json');
-    
-    if (response.status !== 200) {
-      console.log("通信がうまくいきませんでした");
-      throw new Error ('サーバー側で発生したエラーです');
-    }
-    posts.value = response.data;
-    console.log(posts.value)
-    isLoading.value = false
-  } catch (e) {
-    console.log('以下のエラーが発生しました', e);
-  }
+const getAllFirebasePikminData = async () => {
+   await _getAllFirebasePikminData()
+   isLoading.value = false
 }
 //ページに入った時点でまず実行する
-getFirebaseData();
+getAllFirebasePikminData()
 
 </script>
 
@@ -40,7 +32,7 @@ getFirebaseData();
   />
     <!-- Cardコンポーネントにデータを送っている -->
   <div class="grid-tile">
-    <div class="card-container" v-for="data in posts" :key="data.id">
+    <div class="card-container" v-for="data in pikminDatas" :key="data.id">
       <RouterLink :to="{ name: 'PikminDetail', params:{id:data.id}}"> 
           <Card :post="data" />
       </RouterLink>

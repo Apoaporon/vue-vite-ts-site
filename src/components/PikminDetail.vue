@@ -1,60 +1,45 @@
 <script setup lang="ts">
-import axios from 'axios';
-import { ref } from 'vue';
-import { Pikmin } from '../types';
+import { inject } from 'vue';
 import { useRoute } from 'vue-router';
-
-// import { useRoute } from 'vue-router';
-// import router from '../router';
+import { pikminKey } from '../store/usePikminData';
 
 const route = useRoute()
 const id = parseInt(route.params.id as string, 10); 
-
-const post = ref("ssssss");
-const getData = ref<Pikmin>();
-
-const getOnePikminData = async (editNum: number) => {
-    try {
-        const response = await axios.get(`https://pikmin-2e508-default-rtdb.firebaseio.com/pikmin-data/${editNum}.json`);
-        if (response.status !== 200) {
-            console.log('error番号は', response.status);
-            throw new Error ('サーバー側で発生したエラーです');
-        }
-        getData.value = response.data; //帰ってきたjsonデータを格納する
-
-    } catch (e) {
-        console.log('以下のエラーが発生しました', e);
-    }
+const state = inject(pikminKey)
+if (!state) {
+    throw new Error("state is undifined")
 }
+const { pikminData, getOnePikminData} = state
 getOnePikminData(id)
+
 </script>
 <template>
+    <RouterLink :to="{ name: 'UpdateData' , params:{id:id}}">
+        <button>テスト</button>
+    </RouterLink>
+
     <div class="book-content">
         <div class="book-lower">
             <div class="book-header">
                 <div class="book-header-column">
                     <div class="book-header-left-parts">
-                        <h2>{{ getData?.name }}</h2>
+                        <h2>{{ pikminData?.name }}</h2>
                         <div>
-                            <p>和名：{{ getData?.jName }}</p>
-                            <p>学名：{{ getData?.sName }}</p>
+                            <p>和名：{{ pikminData?.jName }}</p>
+                            <p>学名：{{ pikminData?.sName }}</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="book-body">
-                <img class="img" :src="getData?.img" :alt="getData?.name">
+                <img class="img" :src="pikminData?.img" :alt="pikminData?.name">
                 <div class="book-header-right-parts">
-                        <p>{{ getData?.detail }}</p>
+                        <p>{{ pikminData?.detail }}</p>
                 </div>
             </div>
 
         </div>
     </div>
-    <RouterLink :to="{name:'Hoge', params:{id:1}}">
-        <h1>{{ post }}</h1>
-    </RouterLink>
-    
 </template>
 <style scoped>
 

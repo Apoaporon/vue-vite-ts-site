@@ -3,6 +3,7 @@ import PikminDetail from '../components/PikminDetail.vue';
 import Hoge from '../components/Hoge.vue';
 import CardList from '../components/CardList.vue';
 import InputData from '../components/InputData.vue';
+import UpdateData from '../components/UpdateData.vue';
 
 // ルートを定義する
 const routes: Array<RouteRecordRaw> = [
@@ -21,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/list/input",
         name: "InputData",
         component: InputData,
+    },
+    {   //updateするページに飛ぶ
+        path: "/list/:id/update",
+        name: "UpdateData",
+        component: UpdateData,
     },
     {   //idをバインドしておく？
         path: "/list/:id",

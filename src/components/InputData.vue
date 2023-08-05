@@ -1,96 +1,52 @@
 
 <script setup lang="ts">
-import { ref, reactive, inject } from 'vue';
-import axios from 'axios';
-import { storage } from '../firebase';
+import { reactive, inject } from 'vue';
 import { pikminKey } from '../store/usePikminData';
-import router from '../router/index';
-
+import { Pikmin } from '../types';
 
 const state = inject(pikminKey)
 if(!state) {
     throw new Error('state is undifind')
 }
-const { pikminDatas,  getAllFirebasePikminData: _getAllFirebasePikminData } = state
+const { pikminDatas,  getAllFirebasePikminData: _getAllFirebasePikminData , putFirebase} = state
 
-// const oneData = ref([]);
 //firebaseから全体データを引っ張ってきた時の長さを格納する。
-const dataLength = ref();
+// const dataLength = ref();
 
 // ピクミンのデータを入れるはこ
-const inputData = reactive({
-    pikminName:'',
+const inputData:Pikmin = reactive({
+    id: 999,
+    name:'',
     jName:'',
     sName:'',
-    imgPath:'',
+    img:'',
     detail:''
 })
 
 const getAllFirebasePikminData = async () => {
     await _getAllFirebasePikminData(); //Firebaseにあるデータの全てを取ってくる
-    dataLength.value = Object.keys(pikminDatas.value).length //データサイズを入れる
+    inputData.id = Object.keys(pikminDatas.value).length //データサイズを入れる
 }
 getAllFirebasePikminData();
 
-
-
-// Firebaseにpostする関数
-const putFirebase = async () => {
-    if (inputData.pikminName && inputData.jName && inputData.sName && inputData.imgPath && inputData.detail && dataLength.value) {
-        const data = {
-            id: dataLength.value,
-            name: inputData.pikminName,
-            jNmame: inputData.jName,
-            sName: inputData.sName,
-            img: inputData.imgPath,
-            detail: inputData.detail
-        }
-        try {
-            const response = await axios.put(`${storage.databaseURL}/pikmin-data/${dataLength.value}.json`, data)
-            console.log(response.status)
-            // リダイレクト
-            router.push({ name: 'CardList'})
-
-        } catch(e) {
-            console.log(e)
-        }
-    // どれかが欠けていた時に出す警告文
-    }else {
-        window.alert(`
-        id ===${dataLength.value}\n
-        name ===${inputData.pikminName}\n
-        jname ===${inputData.jName}\n
-        sname ===${inputData.sName}\n
-        imgpath ===${inputData.imgPath}\n
-        `)
-    }
-    
-
-}
 </script>
 
 <template>
     <div>
         <div>
             <h4>名前を入力</h4>
-            <input type="text" v-model="inputData.pikminName" />
+            <input type="text" v-model="inputData.name" />
             <h4>和名を入力</h4>
             <input type="text" v-model="inputData.jName">
             <h4>英語名を入力</h4>
             <input type="text" v-model="inputData.sName">
             <h4>画像のpathを入力</h4>
-            <input type="text" v-model="inputData.imgPath">
+            <input type="text" v-model="inputData.img">
             <h4>詳細を入力</h4>
             <textarea cols="30" rows="10" v-model="inputData.detail"></textarea>
         </div>
-        <button @click="putFirebase">Firebaseに送信</button>
+        <button @click="putFirebase(inputData)">Firebaseに送信</button>
     </div>
-
-
-<!-- <div>
-    <button @click="test2(0)">押してみてね</button>
-    <p>{{ oneData }}</p>
-</div> -->
 </template>
 
 <style scoped>
