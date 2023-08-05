@@ -7,6 +7,7 @@ import axios from 'axios';
 export const pikimins = (() => {
     // ピクミンデータを格納するリスト
     const pikminDatas = ref<Pikmin[]>([]);
+    const pikminData = ref<Pikmin>();
     // Firebaseに格納されているピクミンの全てのデータを取得する関数
     const getAllFirebasePikminData = async() => {
         try {
@@ -21,20 +22,20 @@ export const pikimins = (() => {
           }
     }
     // Firebaseから特定のピクミンのデータを取得する
-    const getOnePikmindata = async (id: number) => {
+    const getOnePikminData = async (id: number) => {
       try {
         const response = await axios.get(`${storage.databaseURL}/pikmin-data/${id}.json`)
         if (response.status !== 200) {
           console.log('error番号は', response.status);
           throw new Error ('サーバー側で発生したエラーです');
         }
-        return response // 指定の1件だけを返す
+        pikminData.value = response.data
       } catch (e) {
         console.log('以下のエラーが出ました', e)
       } 
     }
 
-    return {pikminDatas, getAllFirebasePikminData, getOnePikmindata }
+    return {pikminDatas, pikminData, getAllFirebasePikminData, getOnePikminData }
 })()
 
 type PikminType = typeof pikimins
