@@ -35,7 +35,21 @@ export const pikimins = (() => {
       } 
     }
 
-    return {pikminDatas, pikminData, getAllFirebasePikminData, getOnePikminData }
+    // Firebaseにデータを入力する関数
+    const putFirebase = async (data:Pikmin) => {
+      if(data.name && data.jName && data.sName && data.img && data.detail) {
+        try {
+          const response = await axios.put(`${storage.databaseURL}/pikmin-data/${data.id}.json`, data)
+          console.log(response.status)
+        } catch(e) {
+          console.log(e)
+        }
+      }else {
+        window.alert("入力不備があるので確認してください")
+      }
+    }
+
+    return {pikminDatas, pikminData, getAllFirebasePikminData, getOnePikminData , putFirebase}
 })()
 
 type PikminType = typeof pikimins
