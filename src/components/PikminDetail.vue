@@ -9,13 +9,11 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute()
 const id = parseInt(route.params.id as string, 10); 
-
-const post = ref("ssssss");
 const getData = ref<Pikmin>();
 
-const getOnePikminData = async (editNum: number) => {
+const getOnePikminData = async () => {
     try {
-        const response = await axios.get(`https://pikmin-2e508-default-rtdb.firebaseio.com/pikmin-data/${editNum}.json`);
+        const response = await axios.get(`https://pikmin-2e508-default-rtdb.firebaseio.com/pikmin-data/${id}.json`);
         if (response.status !== 200) {
             console.log('error番号は', response.status);
             throw new Error ('サーバー側で発生したエラーです');
@@ -26,9 +24,14 @@ const getOnePikminData = async (editNum: number) => {
         console.log('以下のエラーが発生しました', e);
     }
 }
-getOnePikminData(id)
+getOnePikminData()
+
 </script>
 <template>
+    <RouterLink :to="{ name: 'UpdateData' , params:{id:id}}">
+        <button>テスト</button>
+    </RouterLink>
+
     <div class="book-content">
         <div class="book-lower">
             <div class="book-header">
@@ -51,10 +54,6 @@ getOnePikminData(id)
 
         </div>
     </div>
-    <RouterLink :to="{name:'Hoge', params:{id:1}}">
-        <h1>{{ post }}</h1>
-    </RouterLink>
-    
 </template>
 <style scoped>
 
